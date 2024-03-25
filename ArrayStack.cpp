@@ -1,6 +1,6 @@
 #include "ArrayStack.h"
 
-
+//Constructor
 ArrayStack::ArrayStack()
 {
 	capacidad = 1000;
@@ -8,6 +8,7 @@ ArrayStack::ArrayStack()
 	size = 0;
 }
 
+//Destructor
 ArrayStack::~ArrayStack()
 {
 	for (int i = 0; i < size; i++)
@@ -18,6 +19,8 @@ ArrayStack::~ArrayStack()
 	delete[] array;
 }
 
+
+//Metodo push (inserta un elemento dentro del stack)
 void ArrayStack::push(Object* obj)
 {
 	if (size < capacidad) {
@@ -31,6 +34,7 @@ void ArrayStack::push(Object* obj)
 	
 }
 
+//Metodo pop (Quita el elemento mas proximo a salir del stack)
 Object* ArrayStack::pop()
 {
 	Object* Devuelto = NULL;
@@ -50,6 +54,7 @@ Object* ArrayStack::pop()
 	
 }
 
+//Mira el top del stack, es decir, el ultimo elemento que se inserto
 Object* ArrayStack::top()
 {
 	if (size) {
@@ -60,6 +65,7 @@ Object* ArrayStack::top()
 		return NULL;
 }
 
+//Verifica si la lista esta vacia
 bool ArrayStack::isEmpty()
 {
 	if (size) {
@@ -69,6 +75,7 @@ bool ArrayStack::isEmpty()
 		return true;
 }
 
+//Limpia el stack, borrando todos los elementos
 void ArrayStack::clear()
 {
 	for (int i = 0; i < size; i++)
@@ -79,6 +86,7 @@ void ArrayStack::clear()
 
 }
 
+//Imprime todos los elementos
 void ArrayStack::print()
 {
 	if (size < 1) {

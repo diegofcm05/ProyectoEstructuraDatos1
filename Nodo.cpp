@@ -1,42 +1,56 @@
 #include "Nodo.h"
 
+//Constructor vacio
 Nodo::Nodo()
 {
-	siguiente = NULL;
-	anterior = NULL;
+	siguiente = nullptr;
+	anterior = nullptr;
 	dato = NULL;
-
 }
 
-Nodo::Nodo(Object* obje)
+//Constructor que recibe un objeto
+Nodo::Nodo(Object* Dato)
 {
-
+	siguiente = nullptr;
+	anterior = nullptr;
+	dato = Dato;
 }
 
+//Destructor
 Nodo::~Nodo()
 {
-	if (dato)
+	if (dato != nullptr) {
 		delete dato;
+	}
 	if (siguiente)
 		delete siguiente;
 }
-
-Nodo* Nodo::getSiguiente() {
+//Funcion para obtener el siguiente nodo
+Nodo* Nodo::getSiguiente()
+{
 	return siguiente;
 }
-Nodo* Nodo::getAnterior() {
+//Funcion para obtener el Nodo Anterior
+Nodo* Nodo::getAnterior()
+{
 	return anterior;
 }
-Object* Nodo::getDato() {
+//Funcion para establecer el nuevo dato contenido en el Nodo
+void Nodo::setDato(Object* Dato)
+{
+	dato = Dato;
+}
+Object* Nodo::getDato()
+{
 	return dato;
 }
-
-void Nodo::setSiguiente(Nodo* pNext) {
-	siguiente = pNext;
+//Funcion para establecer el Nodo siguiente
+void Nodo::setSiguiente(Nodo* Siguiente)
+{
+	siguiente = Siguiente;
 }
-void Nodo::setAnterior(Nodo* pPrev) {
-	anterior = pPrev;
-}
-void Nodo::setDato(Object* Data) {
-	dato = Data;
+//Funcion para establecer el Nodo anterior
+void Nodo::setAnterior(Nodo* Anterior)
+{
+	anterior = Anterior;
 }

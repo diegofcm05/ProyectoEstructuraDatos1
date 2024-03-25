@@ -6,10 +6,12 @@
 #include "TDACola.h"
 #include "ArrayStack.h"
 #include "ArrayQueue.h"
+#include "LinkedStack.h"
 #include "LinkedQueue.h"
+#include "LinkedList.h"
 #include "TDALista.h"
 #include "ArrayList.h"
-#include "LinkedList.h"
+
 
 using namespace std;
 
@@ -111,7 +113,7 @@ void menuInternoAL() {
 
                 alumno = new Alumno(nombre, nCuenta);
 
-                //posicion
+                //pide la posicion donde se desea ingresar el alumno
                 cout << "Ingrese la posicion en donde desea agregar el alumno: ";
                 cin >> pos;
 
@@ -160,7 +162,7 @@ void menuInternoAL() {
             break;
         case 3://En el caso 3, se trata de buscar un alumno mediante su numero de cuenta.
             cout << "Introduzca el numero de cuenta que desea consultar: ";
-            cin >> nCuenta;
+            getline(cin, nCuenta);
 
             alumno = new Alumno(".", nCuenta);
 
@@ -621,7 +623,7 @@ void menuInternoLP() {
             caracter = '\0';
             cout << "A continuación se agregara un simbolo nuevo a la pila." << endl;
             cout << "Ingrese el simbolo que desea almacenar en la pila: ";
-            cin.ignore();
+
             getline(cin, caracter);
             while (caracter.size() > 1) {
                 cout << "Recuerde que solo puede ingresar un caracter. Intente de nuevo: ";
@@ -636,6 +638,7 @@ void menuInternoLP() {
             if (!Pila->isEmpty()) {
                 cout << "A continuación se sacara el objeto ultimo almacenado en la pila" << endl;
                 Simbolo* sacadePila = dynamic_cast<Simbolo*>(Pila->pop());
+                cout << "El simbolo sacado de la pila fue " << sacadePila->toString() << endl;
             }
             else
                 cout << "La pila esta vacia" << endl;
@@ -924,7 +927,7 @@ void menuTipoPilas() {
             menuInternoAP();
             break;
         case 2:
-            //Pila = new LinkedStack();
+            Pila = new LinkedStack();
             menuInternoLP();
             break;
         case 3:

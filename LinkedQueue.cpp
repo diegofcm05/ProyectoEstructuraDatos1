@@ -12,10 +12,11 @@ LinkedQueue::~LinkedQueue()
 	delete head;
 }
 
+//Funcion encolar: mete un alumno a la cola
 void LinkedQueue::queue(Alumno* alumno)
 {
 	NodoAlumno* temporal = new NodoAlumno(alumno);
-	//Si no esta vacia le a?ade un elemento a la par de la cola y luego hace que el nuevo se convierta en la cola.
+	//Si no esta vacia le anade un elemento a la par de la cola y luego hace que el nuevo se convierta en la cola.
 	if (size != 0) {
 		tail->setSiguiente(temporal);
 		temporal->setAnterior(tail);
@@ -30,6 +31,7 @@ void LinkedQueue::queue(Alumno* alumno)
 	cout << "Alumno ingresado exitosamente" << endl;
 }
 
+//Funcion desencolar: quita un alumno de la cola
 Alumno* LinkedQueue::dequeue()
 {
 	if (size != 0) {
@@ -54,6 +56,7 @@ Alumno* LinkedQueue::dequeue()
 	}
 }
 
+//Mira el elemento proximo a salir, o el frente de la cola
 void LinkedQueue::peek()
 {
 	if (!vacia())
@@ -62,12 +65,14 @@ void LinkedQueue::peek()
 		cout << "La cola esta vacia!!!" << endl;
 }
 
+//Revisa si la cola esta vacia
 bool LinkedQueue::vacia()
 {
 	bool vacia = size == 0 ? true : false;
 	return vacia;
 }
 
+//Borra todos los elementos de la cola
 void LinkedQueue::anula()
 {
 	delete head;
@@ -76,6 +81,7 @@ void LinkedQueue::anula()
 	size = 0;
 }
 
+//Imprime todos los elementos actuales de la cola
 void LinkedQueue::imprimir()
 {
 	if (vacia()) {

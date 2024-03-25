@@ -1,5 +1,6 @@
 #include "TDACola.h"
 
+//Metodos virtuales padre de Cola/Queue (son implementados en ArrayQueue y LinkedQueue)
 void TDACola::queue(Alumno*)
 {
 }
@@ -26,6 +27,7 @@ void TDACola::imprimir()
 {
 }
 
+//Constructor y Destructor
 TDACola::TDACola()
 {
 }

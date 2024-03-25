@@ -108,7 +108,7 @@ int LinkedList::busca(Object* obj) {
         return 1;
     }
     else {
-        for (size_t i = 1; i <= size; i++) {
+        for (int i = 1; i <= size; i++) {
             if (temp->getDato()->equals(obj)) {
                 return i;
             }

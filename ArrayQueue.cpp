@@ -22,6 +22,7 @@ ArrayQueue::~ArrayQueue()
 	delete array;
 }
 
+//Funcion encolar: mete un alumno a la cola
 void ArrayQueue::queue(Alumno* alm)
 {
 	//Evaluamos que no este llena.
@@ -42,6 +43,7 @@ void ArrayQueue::queue(Alumno* alm)
 	}
 }
 
+//Funcion desencolar: quita un alumno de la cola
 Alumno* ArrayQueue::dequeue()
 {
 	//Evaluamos que no este vacia
@@ -63,6 +65,7 @@ Alumno* ArrayQueue::dequeue()
 	}
 }
 
+//Mira el elemento proximo a salir, o el frente de la cola
 void ArrayQueue::peek()
 {
 	if (!vacia())
@@ -71,6 +74,7 @@ void ArrayQueue::peek()
 		cout << "La cola esta vacia" << endl;
 }
 
+//Revisa si la cola esta vacia
 bool ArrayQueue::vacia()
 {
 	//La cola esta hecha tal que tail apunte a la primera casilla vacia del array ciclico, solo apunta a head si no hay nada mas en el array.
@@ -78,6 +82,7 @@ bool ArrayQueue::vacia()
 	return vacia;
 }
 
+//Borra todos los elementos de la cola
 void ArrayQueue::anula()
 {
 	//Borra el array
@@ -97,6 +102,7 @@ void ArrayQueue::anula()
 	head, tail = 0;
 }
 
+//Imprime todos los elementos actuales de la cola
 void ArrayQueue::imprimir()
 {
 	if (!vacia()) {

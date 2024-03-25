@@ -1,9 +1,11 @@
 #include "NodoAlumno.h"
 
+//Constructor vacio
 NodoAlumno::NodoAlumno()
 {
 }
 
+//Constructor que contiene un alumno
 NodoAlumno::NodoAlumno(Alumno* dato)
 {
 	this->dato = dato;
@@ -11,11 +13,13 @@ NodoAlumno::NodoAlumno(Alumno* dato)
 	this->siguiente = nullptr;
 }
 
+//Destructor
 NodoAlumno::~NodoAlumno()
 {
 	delete this->dato;
 }
 
+//getters y setters de NodoAlumno
 NodoAlumno* NodoAlumno::getAnterior()
 {
 	return this->anterior;

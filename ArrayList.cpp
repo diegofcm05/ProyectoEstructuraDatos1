@@ -25,6 +25,7 @@ ArrayList::~ArrayList()
 	delete[] array;
 }
 
+//inserta el dato en la posicion indicada
 bool ArrayList::inserta(Object* dato, int position)
 {
 	position--;
@@ -42,6 +43,7 @@ bool ArrayList::inserta(Object* dato, int position)
 	return false;
 }
 
+//quita el dato de la posicion indicada en el paramentro de la lista
 bool ArrayList::suprime(int position)
 {
 	position--;
@@ -59,6 +61,7 @@ bool ArrayList::suprime(int position)
 	return false;
 }
 
+//borra todos los elementos de la lista
 void ArrayList::anula()
 {
 	for (int i = 0; i < size; i++)
@@ -69,6 +72,7 @@ void ArrayList::anula()
 	size = 0;
 }
 
+//retorna el objeto almacenado en la posicion indicada
 Object* ArrayList::recupera(int position)
 {
 	position--;
@@ -80,6 +84,7 @@ Object* ArrayList::recupera(int position)
 	return nullptr;
 }
 
+//retorna el objkecto almacenado en la posicion anterior a la indiciada
 Object* ArrayList::anterior(int position)
 {
 	position--;
@@ -92,6 +97,7 @@ Object* ArrayList::anterior(int position)
 	return nullptr;
 }
 
+//retorna el objecto almacenado en la posicion siguiente a la indiciada
 Object* ArrayList::siguiente(int position)
 {
 	position--;
@@ -104,6 +110,7 @@ Object* ArrayList::siguiente(int position)
 	return nullptr;
 }
 
+//imprime los objetos de la lista
 void ArrayList::imprime_lista()
 {
 	for (int i = 0; i < size; i++)
@@ -117,6 +124,7 @@ void ArrayList::imprime_lista()
 	}
 }
 
+//retorna la posicion donde se ubica el dato indicado en el prametro
 int ArrayList::busca(Object* dato)
 {
 	for (size_t i = 0; i < size; i++)
@@ -132,6 +140,7 @@ int ArrayList::busca(Object* dato)
 	return 0;
 }
 
+//retorna verdadero si la lista esta vacia
 bool ArrayList::vacia()
 {
 	if (this->size == 0) {

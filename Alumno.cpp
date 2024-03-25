@@ -1,24 +1,26 @@
 #include "Alumno.h"
 
+//Constructor vacio de alumno
 Alumno::Alumno()
 {
 
 
 }
 
+//Constructor de alumno que recibe dos strings (nombre, cuenta)
 Alumno::Alumno(string nombre, string NC) 
 {
 	name = nombre;
 	numCuenta = NC;
 }
 
-
+//Destructor de alumno
 Alumno::~Alumno()
 {
 
 }
 
-
+//Metodo toString de Alumno
 string Alumno::toString()
 {
 	string x = "Alumno - Nombre: " + name + " / Cuenta: " + numCuenta;
@@ -26,7 +28,7 @@ string Alumno::toString()
 }
 
 
-
+//Metodo que compara dos alumnos
 bool Alumno::equals(Object* otroObj)
 {
 	if (dynamic_cast<Alumno*>(otroObj)) {
@@ -40,6 +42,8 @@ bool Alumno::equals(Object* otroObj)
 	return false;
 }
 
+
+//Getters y Setters de nombre y cuenta
 string Alumno::getNombre()
 {
 	return name;
