@@ -23,8 +23,9 @@ Simbolo::~Simbolo()
 string Simbolo::toString()
 {
 	string abc;
-	abc += "Simbolo - ";
+	abc += "Simbolo - (";
 	abc += simb;
+	abc += ")";
 	return abc;
 }
 

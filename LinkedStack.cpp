@@ -68,6 +68,7 @@ void LinkedStack::clear()
 //Imprime todos los elementos
 void LinkedStack::print()
 {
+	cout << "Impresion de elementos en orden saliente" << endl;
 	Nodo* temp = tope;
 	while (temp != nullptr) {
 		cout << temp->getDato()->toString() << (temp->getAnterior() != nullptr ? ", " : " ");

@@ -98,7 +98,7 @@ void menuInternoAL() {
 
         switch (opc) {
         case 1://En esta opcion se hace el agregado de un alumno
-
+            cout << "Opcion 1 - Insertar" << endl;
             cout << "---- En listas, unicamente es posible insertar Alumnos ----" << endl;
 
             //creacion del objeto "Alumno"
@@ -150,17 +150,19 @@ void menuInternoAL() {
             }
             break;
         case 2://En el caso 2, se imprime la lista completa
+            cout << "Opcion 2 - Imprimir Elementos" << endl;
             if (!lista->vacia()) {
-                cout << "Alumnos" << endl;
+                cout << "Alumnos existentes en la lista:" << endl;
 
                 lista->imprime_lista();
             }
             else {
-                cout << "No hay elementos en la lista para mostrar" << endl;
+                cout << "No hay elementos en la lista para mostrar." << endl;
             }
 
             break;
         case 3://En el caso 3, se trata de buscar un alumno mediante su numero de cuenta.
+            cout << "Opcion 3 - Buscar" << endl;
             cout << "Introduzca el numero de cuenta que desea consultar: ";
             getline(cin, nCuenta);
 
@@ -174,12 +176,14 @@ void menuInternoAL() {
                 cout << "No hay ningun elemento con el dato ingresado" << endl;
             }
             else {
+                cout << "Alumno encontrado: " << endl;
                 cout << alumno->toString() << endl;
             }
-            cin.ignore();
+           
             break;
 
         case 4://En esta opcion, se borra un elemento que el usuario desee hacer eso con.
+            cout << "Opcion 4 - Eliminar elemento" << endl;
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea eliminar: ";
                 cin >> pos;
@@ -197,13 +201,14 @@ void menuInternoAL() {
 
             break;
         case 5://En el caso 5, se verifica si la lista esta vacia o no.
-
+            cout << "Opcion 5 - Verificar si esta vacia" << endl;
             if (lista->vacia())
                 cout << "La lista esta vacia" << endl;
             else
                 cout << "Actualmente hay " << lista->getSize() << " elementos" << endl; //Si no esta vacia, imprime los elementos que hay.
             break;
         case 6://En el caso 6, se busca un elemento.
+            cout << "Opcion 6 - Obtener elemento por posicion" << endl;
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea recuperar: ";
                 cin >> pos;
@@ -222,6 +227,7 @@ void menuInternoAL() {
 
             break;
         case 7://Retorna el elemento siguiente a la posicion establecida por el usuario.
+            cout << "Opcion 7 - Recuperar Siguiente" << endl;
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea recuperar el elemento siguiente a ese: ";
                 cin >> pos;
@@ -241,7 +247,9 @@ void menuInternoAL() {
             break;
 
         case 8://Retorna el elemento anterior a la posicion establecida por el usuario.
+            cout << "Opcion 8 - Recuperar Anterior" << endl;
             if (!lista->vacia()) {
+
                 cout << "Ingrese la posicion que desea recuperar el elemento anterior a ese: ";
                 cin >> pos;
 
@@ -258,6 +266,7 @@ void menuInternoAL() {
             cin.ignore();
             break;
         case 9://En el caso 9, la lista se vacia completamente.
+            cout << "Opcion 9 - Borrar todos los elementos" << endl;
             if (!lista->vacia()) {
                 lista->anula();
 
@@ -521,7 +530,7 @@ void menuInternoAP() {
 
         switch (opc) {
         case 1://Primera opcion: Se empuja (o ingresa) un elemento "Simbolo" al stack.
-
+            cout << "Opcion 1 - Empujar dentro del stack" << endl;
             cout << "A continuacion va a empujar un nuevo elemento dentro del stack." << endl;
             cout << "Ingrese el simboolo que le gustaria insertar (1 caracter): ";
             getline(cin, newSimb);
@@ -538,15 +547,15 @@ void menuInternoAP() {
             break;
 
         case 2://Se saca un elemento del stack.
-
+            cout << "Opcion 2 - Sacar un elemento" << endl;
             symsacado = Pila->pop();
             if (symsacado) {
-                cout << "Ha sacado el ultimo elemento en entrar al stack. El elemento sacado fue " << symsacado->toString() << endl;
+                cout << "Ha sacado el ultimo elemento en entrar al stack.\nEl elemento sacado fue " << symsacado->toString() << endl;
             }
             break;
 
         case 3://Se revisa cual es el tope del stack, SIN sacarlo.
-
+            cout << "Opcion 3 - Ver Tope" << endl;
             topeActS = Pila->top();
             if (topeActS) {
                 cout << "El tope actual de la pila es: " << topeActS->toString() << endl;
@@ -554,6 +563,7 @@ void menuInternoAP() {
             break;
 
         case 4://Se revisa si la pila esta vacia.
+            cout << "Opcion 4 - Revisar pila vacia" << endl;
             if (Pila->isEmpty()) {
                 cout << "La pila esta vacia.\n";
             }
@@ -562,14 +572,14 @@ void menuInternoAP() {
             break;
 
         case 5://Se imprimen todos los elementos del stack actual.
-
+            cout << "Opcion 5 - Imprimir elementos de pila" << endl;
             Pila->print();
             break;
 
         case 6://Se limpia el stack, se borran los elementos y se libera memoria internamente.
-
+            cout << "Opcion 6 - Borrar elementos de pila" << endl;
             Pila->clear();
-            cout << "Se han borrado todos los elementos actuales de la lista. Su size ahora es " << Pila->size << endl;
+            cout << "Se han borrado todos los elementos actuales de la lista.\nSu size ahora es " << Pila->size << endl;
             break;
 
         case 7://Opcion para salir a un menu exterior.
@@ -619,7 +629,8 @@ void menuInternoLP() {
         }
 
         switch (opc) {
-        case 1:
+        case 1://Primera opcion: Se empuja (o ingresa) un elemento "Simbolo" al stack.
+            cout << "Opcion 1 - Empujar dentro del stack" << endl;
             caracter = '\0';
             cout << "A continuación se agregara un simbolo nuevo a la pila." << endl;
             cout << "Ingrese el simbolo que desea almacenar en la pila: ";
@@ -634,7 +645,8 @@ void menuInternoLP() {
             cout << "El simbolo se ha almacenado exitosamente!" << endl;
             break;
 
-        case 2:
+        case 2://Se saca un elemento del stack.
+            cout << "Opcion 2 - Sacar un elemento" << endl;
             if (!Pila->isEmpty()) {
                 cout << "A continuación se sacara el objeto ultimo almacenado en la pila" << endl;
                 Simbolo* sacadePila = dynamic_cast<Simbolo*>(Pila->pop());
@@ -645,28 +657,32 @@ void menuInternoLP() {
 
             break;
 
-        case 3:
+        case 3://Se revisa cual es el tope del stack, SIN sacarlo.
+            cout << "Opcion 3 - Ver Tope" << endl;
             if (!Pila->isEmpty())
                 cout << "El Simbolo que esta en la cima de la pila es: " << dynamic_cast<Simbolo*>(Pila->top())->getSimbolo() << endl;
             else
                 cout << "La pila esta vacia." << endl;
             break;
 
-        case 4:
+        case 4://Se revisa si la pila esta vacia.
+            cout << "Opcion 4 - Revisar pila vacia" << endl;
             if (!Pila->isEmpty())
                 cout << "La pila No esta vacia." << endl;
             else
                 cout << "La pila esta vacia." << endl;
             break;
 
-        case 5:
+        case 5://Se imprimen todos los elementos del stack actual.
+            cout << "Opcion 5 - Imprimir elementos de pila" << endl;
             if (!Pila->isEmpty())
                 Pila->print();
             else
                 cout << "La pila esta vacia." << endl;
             break;
 
-        case 6:
+        case 6://Se limpia el stack, se borran los elementos y se libera memoria internamente.
+            cout << "Opcion 6 - Borrar elementos de pila" << endl;
             if (!Pila->isEmpty()) {
                 Pila->clear();
                 cout << "La pila se ha vaciado con éxito!" << endl;
@@ -675,7 +691,7 @@ void menuInternoLP() {
                 cout << "La pila ya esta vacia." << endl;
             break;
 
-        case 7:
+        case 7://Opcion para salir a un menu exterior.
             cout << "Saldra al menu de tipo de pilas." << endl;
             break;
 
@@ -723,11 +739,13 @@ void menuInternoAC() {
         switch (opc) {
 
         case 1: {//Case que sirve para insertar un alumno a la queue
+            cout << "Opcion 1 - Encolar" << endl;
             Alumno* insertar = crearAlumno();
             aq->queue(insertar);
             break;
         }
         case 2: {//Case que sirve para quitar un alumno de la queue
+            cout << "Opcion 2 - Desencolar" << endl;
             Alumno* recibir = aq->dequeue();
             if (recibir) {
                 cout << "El alumno que se acaba de quitar es: " << recibir->toString() << endl;
@@ -735,19 +753,23 @@ void menuInternoAC() {
             break;
         }
         case 3: {//Se mira cual es el frente de la cola
+            cout << "Opcion 3 - Ver Frente" << endl;
             aq->peek();
             break;
         }
         case 4: {//Verifica si la cola esta o no esta vacia
+            cout << "Opcion 4 - Verificar si la cola esta vacia" << endl;
             string imprimir = aq->vacia() ? "Esta vacia" : "No esta vacia";
             cout << imprimir << endl;
             break;
         }
         case 5: {//Imprime toda la cola.
+            cout << "Opcion 5 - Imprimir elementos de cola" << endl;
             aq->imprimir();
             break;
         }
         case 6: {//Vacia la cola.
+            cout << "Opcion 6 - Borrar elementos de cola" << endl;
             aq->anula();
             cout << "La lista se vacio con exito" << endl;
             break;
@@ -801,30 +823,36 @@ void menuInternoLC() {
 
         switch (opc) {
         case 1: {//Case que sirve para insertar un alumno a la queue
+            cout << "Opcion 1 - Encolar" << endl;
             Alumno* insertar = crearAlumno();
             lq->queue(insertar);
             break;
         }
         case 2: {//Case que sirve para quitar un alumno de la queue
+            cout << "Opcion 2 - Desencolar" << endl;
             Alumno* recibir = lq->dequeue();
             if (recibir)
                 cout << "El siguiente alumno es: " << recibir->toString() << endl;
             break;
         }
         case 3: {//Se mira cual es el frente de la cola
+            cout << "Opcion 3 - Ver Frente" << endl;
             lq->peek();
             break;
         }
         case 4: {//Verifica si la cola esta o no esta vacia
+            cout << "Opcion 4 - Verificar si la cola esta vacia" << endl;
             string imprimir = lq->vacia() ? "Esta Vacia" : "No esta vacia";
             cout << imprimir << endl;
             break;
         }
         case 5: {//Imprime toda la cola.
+            cout << "Opcion 5 - Imprimir elementos de cola" << endl;
             lq->imprimir();
             break;
         }
         case 6: {//Vacia la cola.
+            cout << "Opcion 6 - Borrar elementos de cola" << endl;
             lq->anula();
             cout << "La cola fue vaciada con exito." << endl;
             break;
