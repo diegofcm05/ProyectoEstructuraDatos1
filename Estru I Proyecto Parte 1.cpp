@@ -34,7 +34,6 @@ Alumno* crearAlumno() {
     string nombre;
     string cuenta;
     cout << "Ingrese el nombre del alumno: " << endl;
-    cin.ignore();
     getline(cin, nombre);
     cout << "Ingrese la cuenta del alumno: " << endl;
     getline(cin, cuenta);
@@ -44,6 +43,7 @@ Alumno* crearAlumno() {
 
 void menuInternoAL() {
     //variables de inicializacion
+    string valid = "";
     int opc = 1;
     string nombre = "";
     string nCuenta = "";
@@ -55,6 +55,7 @@ void menuInternoAL() {
     int pos = 0;
 
     while (opc != 10) {
+        seguir = true;
         cout << "----- Operaciones de Listas -----" << endl;
         cout << "1. Insertar Elemento" << endl;
         cout << "2. Imprimir Elementos" << endl;
@@ -67,29 +68,43 @@ void menuInternoAL() {
         cout << "9. Borrar todos los elementos (anula)" << endl;
         cout << "10. Regresar al menu anterior" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 10) {
-            cin.ignore();
+        getline(cin, valid);
+
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 10) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
         switch (opc) {
-        case 1:
+        case 1://En esta opcion se hace el agregado de un alumno
 
             cout << "---- En listas, unicamente es posible insertar Alumnos ----" << endl;
 
-            //creacion dle objeto "Alumno"
+            //creacion del objeto "Alumno"
 
             while (seguir) {
                 cout << "Ingrese el nombre del alumno: ";
-                cin >> nombre;
+                getline(cin, nombre);
 
-                
 
                 cout << "Ingrese el numero de cuenta: ";
-                cin >> nCuenta;
+                getline(cin, nCuenta);
 
                 alumno = new Alumno(nombre, nCuenta);
 
@@ -108,10 +123,10 @@ void menuInternoAL() {
                 else {
                     cout << "Error al agregar el elemento." << endl;
                 }
-
+                cin.ignore();
                 do {
                     cout << "Desea continuar (Ingrese Si/No): ";
-                    cin >> respuesta;
+                    getline(cin, respuesta);
 
                     if (respuesta == "si" || respuesta == "Si") {
                         seguir = true;
@@ -125,12 +140,11 @@ void menuInternoAL() {
                         cout << "Respuesta invalida, intente nuevamente" << endl;
 
                     }
-                } while (true);
+                } while (seguir);
 
             }
-
             break;
-        case 2:
+        case 2://En el caso 2, se imprime la lista completa
             if (!lista->vacia()) {
                 cout << "Alumnos" << endl;
 
@@ -141,7 +155,7 @@ void menuInternoAL() {
             }
 
             break;
-        case 3:
+        case 3://En el caso 3, se trata de buscar un alumno mediante su numero de cuenta.
             cout << "Introduzca el numero de cuenta que desea consultar: ";
             cin >> nCuenta;
 
@@ -157,8 +171,10 @@ void menuInternoAL() {
             else {
                 cout << alumno->toString() << endl;
             }
+            cin.ignore();
             break;
-        case 4:
+
+        case 4://En esta opcion, se borra un elemento que el usuario desee hacer eso con.
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea eliminar: ";
                 cin >> pos;
@@ -172,16 +188,17 @@ void menuInternoAL() {
             else {
                 cout << "La lista esta vacia, no hay nada que eliminar!" << endl;
             }
+            cin.ignore();
 
             break;
-        case 5:
+        case 5://En el caso 5, se verifica si la lista esta vacia o no.
 
             if (lista->vacia())
                 cout << "La lista esta vacia" << endl;
             else
-                cout << "Actualmente hay " << lista->getSize() << " elementos" << endl;
+                cout << "Actualmente hay " << lista->getSize() << " elementos" << endl; //Si no esta vacia, imprime los elementos que hay.
             break;
-        case 6:
+        case 6://En el caso 6, se busca un elemento.
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea recuperar: ";
                 cin >> pos;
@@ -196,9 +213,10 @@ void menuInternoAL() {
                 }
 
             }
+            cin.ignore();
 
             break;
-        case 7:
+        case 7://Retorna el elemento siguiente a la posicion establecida por el usuario.
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea recuperar el elemento siguiente a ese: ";
                 cin >> pos;
@@ -214,8 +232,10 @@ void menuInternoAL() {
 
 
             }
+            cin.ignore();
             break;
-        case 8:
+
+        case 8://Retorna el elemento anterior a la posicion establecida por el usuario.
             if (!lista->vacia()) {
                 cout << "Ingrese la posicion que desea recuperar el elemento anterior a ese: ";
                 cin >> pos;
@@ -230,15 +250,16 @@ void menuInternoAL() {
                 }
 
             }
+            cin.ignore();
             break;
-        case 9:
+        case 9://En el caso 9, la lista se vacia completamente.
             if (!lista->vacia()) {
                 lista->anula();
 
                 cout << "Los elementos se han eliminado exitosamente!" << endl;
             }
             break;
-        case 10:
+        case 10://Se sale al menu exterior a este.
             cout << "Saldra al menu de tipo de listas" << endl;
             break;
         default:
@@ -249,8 +270,15 @@ void menuInternoAL() {
 
 void menuInternoLL() {
     LinkedList* lista = new LinkedList();
+    Alumno* alumno;
     int opc = 1;
+    int posicion;
+    string nombre, nCuenta, respuesta;
+    string valid = "";
+    bool seguir = true;
+    int pos;
     while (opc != 10) {
+        seguir = true;
         cout << "----- Operaciones de Listas -----" << endl;
         cout << "1. Insertar Elemento" << endl;
         cout << "2. Imprimir Elementos" << endl;
@@ -263,28 +291,81 @@ void menuInternoLL() {
         cout << "9. Borrar todos los elementos (anula)" << endl;
         cout << "10. Regresar al menu anterior" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 10) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 10) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
         switch (opc) {
         case 1:
-        {
-            string nombre, numCuenta;
-            cout << "Ingrese el nombre del alumno: ";
-            cin.ignore();
-            getline(cin, nombre);
-            cout << "Ingrese el número de cuenta del alumno: ";
-            getline(cin, numCuenta);
-            Alumno* alumno = new Alumno(nombre, numCuenta);
-            lista->inserta(alumno, lista->getSize());
+
+
+            while (seguir) {
+                cout << "Ingrese el nombre del alumno: ";
+                cin.ignore();
+                getline(cin, nombre);
+                cout << "Ingrese el número de cuenta del alumno: ";
+                getline(cin, nCuenta);
+
+                alumno = new Alumno(nombre, nCuenta);
+
+                //posicion
+                cout << "Ingrese la posicion en donde desea agregar el alumno: ";
+                cin >> pos;
+
+                while (pos < 1 || pos > lista->getSize() + 1) {
+                    cout << "Posición inválida" << endl;
+                    cout << "Ingrese la posicion en donde desea agregar el alumno: ";
+                    cin >> pos;
+                }
+                if (lista->inserta(alumno, pos)) {
+                    cout << "Se ha agregado el elemento exitosamente!" << endl;
+                }
+                else {
+                    cout << "Error al agregar el elemento." << endl;
+                }
+                cin.ignore();
+                do {
+                    cout << "Desea continuar (Ingrese Si/No): ";
+                    getline(cin, respuesta);
+
+                    if (respuesta == "si" || respuesta == "Si") {
+                        seguir = true;
+                        break;
+                    }
+                    else if (respuesta == "no" || respuesta == "No") {
+                        seguir = false;
+                        break;
+                    }
+                    else {
+                        cout << "Respuesta invalida, intente nuevamente" << endl;
+
+                    }
+                } while (seguir);
+
+            }
+
+
             break;
-        }
-        case 2: {
+
+        case 2:
             if (lista->vacia())
             {
                 cout << "LISTA VACIA" << endl;
@@ -298,14 +379,14 @@ void menuInternoLL() {
             }
 
             break;
-        }
-        case 3: {
-            string numCuenta;
+
+        case 3:
             cout << "Ingrese el número de cuenta del alumno a buscar: ";
             cin.ignore();
-            getline(cin, numCuenta);
-            Alumno alumno("", numCuenta);
-            int posicion = lista->busca(&alumno);
+            getline(cin, nCuenta);
+            alumno = new Alumno("", nCuenta);
+
+            posicion = lista->busca(alumno);
             if (posicion != -1) {
                 cout << "El alumno se encuentra en la posición " << posicion << endl;
             }
@@ -313,8 +394,8 @@ void menuInternoLL() {
                 cout << "El alumno no se encuentra en la lista." << endl;
             }
             break;
-        }
-        case 4: {
+
+        case 4:
             int posicion;
             int index;
             lista->imprime_lista();
@@ -329,18 +410,17 @@ void menuInternoLL() {
 
 
             break;
-        }
-        case 5: {
-            cout << "La lista está vacía: " << (lista->vacia() ? "Sí" : "No") << endl;
+
+        case 5:
+            cout << (lista->vacia() ? "Está vacia" : "No está vacia") << endl;
+            cout << endl;
             break;
-        }
-        case 6: {
-            int posicion;
-            int index;
+
+        case 6:
             lista->imprime_lista();
             cout << "Ingrese la posición del elemento a obtener: ";
             cin >> posicion;
-            Alumno* alumno = dynamic_cast<Alumno*>(lista->recupera(posicion));
+            alumno = dynamic_cast<Alumno*>(lista->recupera(posicion));
             if (alumno != nullptr) {
                 cout << "El elemento en la posición " << posicion << " es: " << alumno->toString() << endl;
             }
@@ -350,16 +430,14 @@ void menuInternoLL() {
 
 
             break;
-        }
-        case 7: {
-            int posicion;
-            int index;
+
+        case 7:
             lista->imprime_lista();
             cout << "Ingrese la posición del elemento del cual desea obtener el siguiente: ";
             cin >> posicion;
-            Alumno* siguiente = dynamic_cast<Alumno*>(lista->siguiente(posicion));
-            if (siguiente != nullptr) {
-                cout << "El siguiente elemento después de la posición " << posicion << " es: " << siguiente->toString() << endl;
+            alumno = dynamic_cast<Alumno*>(lista->siguiente(posicion));
+            if (alumno != nullptr) {
+                cout << "El siguiente elemento después de la posición " << posicion << " es: " << alumno->toString() << endl;
             }
             else {
                 cout << "No hay siguiente elemento o la posición es inválida." << endl;
@@ -367,16 +445,14 @@ void menuInternoLL() {
 
 
             break;
-        }
-        case 8: {
-            int posicion;
-            int index;
+
+        case 8:
             lista->imprime_lista();
             cout << "Ingrese la posición del elemento del cual desea obtener el anterior: ";
             cin >> posicion;
-            Alumno* anterior = dynamic_cast<Alumno*>(lista->anterior(posicion));
-            if (anterior != nullptr) {
-                cout << "El elemento anterior a la posición " << posicion << " es: " << anterior->toString() << endl;
+            alumno = dynamic_cast<Alumno*>(lista->anterior(posicion));
+            if (alumno != nullptr) {
+                cout << "El elemento anterior a la posición " << posicion << " es: " << alumno->toString() << endl;
             }
             else {
                 cout << "No hay elemento anterior o la posición es inválida." << endl;
@@ -384,16 +460,16 @@ void menuInternoLL() {
 
 
             break;
-        }
-        case 9: {
+
+        case 9:
             lista->anula();
             cout << "Se han borrado todos los elementos de la lista." << endl;
             break;
-        }
-        case 10: {
+
+        case 10:
             cout << "Regresando al menú anterior..." << endl;
             break;
-        }
+
         default:
             cout << "Opción no válida. Por favor, intente de nuevo." << endl;
         }
@@ -402,7 +478,7 @@ void menuInternoLL() {
 
 void menuInternoAP() {
     int opc = 1;
-
+    string valid = "";
     string newSimb = "";
     while (opc != 7) {
         cout << "----- Operaciones de Pilas -----" << endl;
@@ -414,17 +490,31 @@ void menuInternoAP() {
         cout << "6. Borrar todos los elementos" << endl;
         cout << "7. Regresar al Menu Anterior" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 7) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 7) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
         switch (opc) {
-        case 1:
-            cin.ignore();
+        case 1://Primera opcion: Se empuja (o ingresa) un elemento "Simbolo" al stack.
+
             cout << "A continuacion va a empujar un nuevo elemento dentro del stack." << endl;
             cout << "Ingrese el simboolo que le gustaria insertar (1 caracter): ";
             getline(cin, newSimb);
@@ -440,7 +530,7 @@ void menuInternoAP() {
             cout << "\nExitoso. El simbolo ha sido agregado al stack.\n";
             break;
 
-        case 2:
+        case 2://Se saca un elemento del stack.
 
             symsacado = Pila->pop();
             if (symsacado) {
@@ -448,7 +538,7 @@ void menuInternoAP() {
             }
             break;
 
-        case 3:
+        case 3://Se revisa cual es el tope del stack, SIN sacarlo.
 
             topeActS = Pila->top();
             if (topeActS) {
@@ -456,7 +546,7 @@ void menuInternoAP() {
             }
             break;
 
-        case 4:
+        case 4://Se revisa si la pila esta vacia.
             if (Pila->isEmpty()) {
                 cout << "La pila esta vacia.\n";
             }
@@ -464,18 +554,18 @@ void menuInternoAP() {
                 cout << "La pila no esta vacia, actualmente contiene por lo menos un elemento.\n";
             break;
 
-        case 5:
+        case 5://Se imprimen todos los elementos del stack actual.
 
             Pila->print();
             break;
 
-        case 6:
+        case 6://Se limpia el stack, se borran los elementos y se libera memoria internamente.
 
             Pila->clear();
             cout << "Se han borrado todos los elementos actuales de la lista. Su size ahora es " << Pila->size << endl;
             break;
 
-        case 7:
+        case 7://Opcion para salir a un menu exterior.
             cout << "Saldra al menu de tipo de pilas." << endl;
             break;
         default:
@@ -485,6 +575,7 @@ void menuInternoAP() {
 }
 
 void menuInternoLP() {
+    string valid = "";
     string caracter;
     int opc = 1;
     while (opc != 7) {
@@ -497,11 +588,25 @@ void menuInternoLP() {
         cout << "6. Borrar todos los elementos" << endl;
         cout << "7. Regresar al Menu Anterior" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 7) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 7) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
@@ -572,7 +677,7 @@ void menuInternoLP() {
 }
 
 void menuInternoAC() {
-    
+    string valid = "";
     int opc = 1;
     while (opc != 7) {
         cout << "----- Operaciones de Colas -----" << endl;
@@ -584,12 +689,25 @@ void menuInternoAC() {
         cout << "6. Borrar los elementos" << endl;
         cout << "7. Regresar al Menu Anterior" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 7) {
-            cin.ignore();
-            cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
 
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 7) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
+            cout << "Ingrese una opcion valida.\n";
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
         }
 
         switch (opc) {
@@ -636,7 +754,7 @@ void menuInternoAC() {
 }
 
 void menuInternoLC() {
-    
+    string valid = "";
     int opc = 1;
     while (opc != 7) {
         cout << "----- Operaciones de Colas -----" << endl;
@@ -648,11 +766,25 @@ void menuInternoLC() {
         cout << "6. Borrar los elementos" << endl;
         cout << "7. Regresar al Menu Anterior" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 7) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 7) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
@@ -699,7 +831,7 @@ void menuInternoLC() {
 
 //Primer menu de listas, donde se escoge entre trabajar con ArrayList o LinkedList
 void menuTipoListas() {
-
+    string valid = "";
     int opc = 1;
     while (opc != 3) {
         cout << "----- Menu Tipo de Lista -----" << endl;
@@ -707,11 +839,25 @@ void menuTipoListas() {
         cout << "2. Trabajar con LinkedList" << endl;
         cout << "3. Regresar al Menú Principal" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 3) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 3) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
@@ -723,7 +869,6 @@ void menuTipoListas() {
             menuInternoLL();
             break;
         case 3:
-            cin.ignore();
             cout << "Ha salido del menu de tipo de listas.\n" << endl;
             break;
 
@@ -734,6 +879,7 @@ void menuTipoListas() {
 }
 
 void menuTipoPilas() {
+    string valid = "";
     int opc = 1;
     while (opc != 3) {
         cout << "----- Menu Tipo de Pila -----" << endl;
@@ -741,11 +887,25 @@ void menuTipoPilas() {
         cout << "2. Trabajar con LinkedStack" << endl;
         cout << "3. Regresar al Menú Principal" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 3) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 3) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 
@@ -769,7 +929,7 @@ void menuTipoPilas() {
 }
 
 void menuTipoColas() {
-    //TDACola* Cola;
+    string valid = "";
     int opc = 1;
     while (opc != 3) {
         cout << "----- Menu Tipo de Cola -----" << endl;
@@ -777,11 +937,25 @@ void menuTipoColas() {
         cout << "2. Trabajar con LinkedQueue" << endl;
         cout << "3. Regresar al Menú Principal" << endl;
 
-        cin >> opc;
-        while (opc < 1 || opc > 3) {
-            cin.ignore();
+        getline(cin, valid);
+        while (!isDigit(valid))//Revisa que lo que ingreso el usuario sean numeros sin espacios.
+        {
+            cout << "Ingrese solo numeros!!\n";
+            getline(cin, valid);
+        }
+
+        opc = stoi(valid);
+
+        while (opc < 1 || opc > 3) {//Revisa, despues de revisar que solo son numeros, que esten dentro del rango establecido.
             cout << "Ingrese una opcion valida.\n";
-            cin >> opc;
+            getline(cin, valid);
+
+            while (!isDigit(valid))
+            {
+                cout << "Ingrese solo numeros!!\n";
+                getline(cin, valid);
+            }
+            opc = stoi(valid);
 
         }
 

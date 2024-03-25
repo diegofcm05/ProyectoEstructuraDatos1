@@ -8,7 +8,7 @@ Nodo::Nodo()
 
 }
 
-Nodo::Nodo(Object*)
+Nodo::Nodo(Object* obje)
 {
 
 }

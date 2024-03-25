@@ -9,7 +9,7 @@ LinkedList::~LinkedList() {
 }
 
 bool LinkedList::inserta(Object* dato, int position) {
-    if (position < 0 || position > size) {
+    if (position < 1 || position > size + 1) {
         return false;
     }
 
@@ -18,7 +18,7 @@ bool LinkedList::inserta(Object* dato, int position) {
         return false;
     }
 
-    if (position == 0) {
+    if (position == 1) {
         nuevoNodo->setSiguiente(nodo);
         if (nodo)
             nodo->setAnterior(nuevoNodo);
@@ -26,7 +26,7 @@ bool LinkedList::inserta(Object* dato, int position) {
     }
     else {
         Nodo* temp = nodo;
-        for (int i = 0; i < position - 1; ++i) {
+        for (int i = 1; i < position - 1; ++i) {
             temp = temp->getSiguiente();
         }
         nuevoNodo->setSiguiente(temp->getSiguiente());
@@ -40,7 +40,7 @@ bool LinkedList::inserta(Object* dato, int position) {
 }
 
 bool LinkedList::suprime(int position) {
-    if (position <= 0 || position > size || size == 0) {
+    if (position < 1 || position > size || size == 0) {
         return false;
     }
 
@@ -53,7 +53,7 @@ bool LinkedList::suprime(int position) {
         }
     }
     else {
-        for (int i = 0; i < position - 1; ++i) {
+        for (int i = 1; i < position; ++i) {
             temp = temp->getSiguiente();
         }
         temp->getAnterior()->setSiguiente(temp->getSiguiente());
@@ -68,12 +68,12 @@ bool LinkedList::suprime(int position) {
 }
 
 Object* LinkedList::siguiente(int position) {
-    if (position <= 0 || position >= size) {
+    if (position < 1 || position >= size) {
         return nullptr;
     }
 
     Nodo* temp = nodo;
-    for (int i = 1; i < position; ++i) {
+    for (int i = 1; i <= position; ++i) {
         temp = temp->getSiguiente();
     }
 
@@ -128,7 +128,7 @@ Object* LinkedList::recupera(int position) {
     }
 
     Nodo* temp = nodo;
-    for (int i = 0; i < position; ++i) {
+    for (int i = 1; i < position; ++i) {
         temp = temp->getSiguiente();
     }
 

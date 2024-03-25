@@ -39,12 +39,15 @@ Object* ArrayStack::pop()
 		Devuelto = array[size - 1];
 		array[size - 1] = NULL;
 		size--;
+		return Devuelto;
 	}
 	else
+	{
 		cout << "No hay nada en el stack para sacar. Esta vacio." << endl;
 		return NULL;
+	}
 	
-	return Devuelto;
+	
 }
 
 Object* ArrayStack::top()
@@ -78,9 +81,15 @@ void ArrayStack::clear()
 
 void ArrayStack::print()
 {
-
-	for (int i = 0; i < size; i++)
-	{
-		cout << array[i]->toString() << endl;
+	if (size < 1) {
+		cout << "No hay elementos para imprimir. El stack esta vacio.\n";
 	}
+	else {
+		cout << "Elementos de stack (en orden de primero a ultimo ingresado):\n";
+		for (int i = 0; i < size; i++)
+		{
+			cout << array[i]->toString() << endl;
+		}
+	}
+	
 }
