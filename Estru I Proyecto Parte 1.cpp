@@ -13,13 +13,14 @@
 
 using namespace std;
 
-TDAPila* Pila;
-TDACola* aq;
-TDACola* lq;
-Object* temporalsym;
-Object* symsacado;
-Object* topeActS;
+TDAPila* Pila; //Pila global usada en el programa
+TDACola* aq;   //Cola que se convertira en ArrayQueue global usado en el programa
+TDACola* lq;   //Cola que se convertira en LinkedQueue global
+Object* temporalsym; //Simbolo temporal, usado cuando se crean nuevos simbolos
+Object* symsacado;  //Simbolo sacado cuando se usa "pop"
+Object* topeActS;   //Guarda el tope actual de la pila de Simbolos
 
+//Metodo que valida las entradas de opciones, verifica que lo que ingresa el usuario son digitos.
 bool isDigit(string aValidar) {
     for (int i = 0; i < aValidar.size(); i++)
     {
@@ -30,6 +31,7 @@ bool isDigit(string aValidar) {
     return true;
 }
 
+//Metodo externo para crear Alumno
 Alumno* crearAlumno() {
     string nombre;
     string cuenta;
@@ -41,6 +43,7 @@ Alumno* crearAlumno() {
     return alumno;
 }
 
+//Menu interno de ArrayList
 void menuInternoAL() {
     //variables de inicializacion
     string valid = "";
@@ -268,6 +271,7 @@ void menuInternoAL() {
     }
 }
 
+//Menu interno de LinkedList
 void menuInternoLL() {
     LinkedList* lista = new LinkedList();
     Alumno* alumno;
@@ -476,6 +480,7 @@ void menuInternoLL() {
     }
 }
 
+//Menu interno de ArrayStack
 void menuInternoAP() {
     int opc = 1;
     string valid = "";
@@ -574,6 +579,7 @@ void menuInternoAP() {
     }
 }
 
+//Menu interno de LinkedStack
 void menuInternoLP() {
     string valid = "";
     string caracter;
@@ -676,6 +682,7 @@ void menuInternoLP() {
     }
 }
 
+//Menu interno de ArrayQueue
 void menuInternoAC() {
     string valid = "";
     int opc = 1;
@@ -712,37 +719,37 @@ void menuInternoAC() {
 
         switch (opc) {
 
-        case 1: {
+        case 1: {//Case que sirve para insertar un alumno a la queue
             Alumno* insertar = crearAlumno();
             aq->queue(insertar);
             break;
         }
-        case 2: {
+        case 2: {//Case que sirve para quitar un alumno de la queue
             Alumno* recibir = aq->dequeue();
             if (recibir) {
-                cout << "El siguiente alumno es: " << recibir->toString() << endl;
+                cout << "El alumno que se acaba de quitar es: " << recibir->toString() << endl;
             }
             break;
         }
-        case 3: {
+        case 3: {//Se mira cual es el frente de la cola
             aq->peek();
             break;
         }
-        case 4: {
+        case 4: {//Verifica si la cola esta o no esta vacia
             string imprimir = aq->vacia() ? "Esta vacia" : "No esta vacia";
             cout << imprimir << endl;
             break;
         }
-        case 5: {
+        case 5: {//Imprime toda la cola.
             aq->imprimir();
             break;
         }
-        case 6: {
+        case 6: {//Vacia la cola.
             aq->anula();
             cout << "La lista se vacio con exito" << endl;
             break;
         }
-        case 7: {
+        case 7: {//Sale al menu exterior de tipos de colas
             cout << "Saldra al menu de tipo de colas." << endl;
             break;
         }
@@ -753,6 +760,7 @@ void menuInternoAC() {
     }
 }
 
+//Menu interno de LinkedQueue
 void menuInternoLC() {
     string valid = "";
     int opc = 1;
@@ -789,36 +797,36 @@ void menuInternoLC() {
         }
 
         switch (opc) {
-        case 1: {
+        case 1: {//Case que sirve para insertar un alumno a la queue
             Alumno* insertar = crearAlumno();
             lq->queue(insertar);
             break;
         }
-        case 2: {
+        case 2: {//Case que sirve para quitar un alumno de la queue
             Alumno* recibir = lq->dequeue();
             if (recibir)
                 cout << "El siguiente alumno es: " << recibir->toString() << endl;
             break;
         }
-        case 3: {
+        case 3: {//Se mira cual es el frente de la cola
             lq->peek();
             break;
         }
-        case 4: {
+        case 4: {//Verifica si la cola esta o no esta vacia
             string imprimir = lq->vacia() ? "Esta Vacia" : "No esta vacia";
             cout << imprimir << endl;
             break;
         }
-        case 5: {
+        case 5: {//Imprime toda la cola.
             lq->imprimir();
             break;
         }
-        case 6: {
+        case 6: {//Vacia la cola.
             lq->anula();
             cout << "La cola fue vaciada con exito." << endl;
             break;
         }
-        case 7: {
+        case 7: {//Sale al menu exterior de tipos de colas
             cout << "Saldra al menu de tipo de colas." << endl;
             break;
         }
@@ -878,6 +886,7 @@ void menuTipoListas() {
     }
 }
 
+//Primer menu de pilas, donde se escoge entre trabajar con ArrayStack o LinkedStack
 void menuTipoPilas() {
     string valid = "";
     int opc = 1;
@@ -928,6 +937,7 @@ void menuTipoPilas() {
     }
 }
 
+//Primer menu de colas, donde se escoge entre trabajar con ArrayQueue o LinkedQueue
 void menuTipoColas() {
     string valid = "";
     int opc = 1;
@@ -978,7 +988,8 @@ void menuTipoColas() {
     }
 }
 
-void menuPrincipal() {//Menú principal del proyecto
+//Menú principal del proyecto
+void menuPrincipal() {
     string valid = "";
     int opc = 1;
     while (opc != 4) {
@@ -1031,7 +1042,7 @@ void menuPrincipal() {//Menú principal del proyecto
 
 }
 
-
+//Metodo main
 int main()
 {
     setlocale(LC_ALL, "spanish");

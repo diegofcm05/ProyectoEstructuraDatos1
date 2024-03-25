@@ -9,7 +9,7 @@ LinkedList::~LinkedList() {
 }
 
 bool LinkedList::inserta(Object* dato, int position) {
-    if (position < 1 || position > size + 1) {
+    if (position < 1 || position > size+1) {
         return false;
     }
 

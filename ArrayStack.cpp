@@ -85,8 +85,8 @@ void ArrayStack::print()
 		cout << "No hay elementos para imprimir. El stack esta vacio.\n";
 	}
 	else {
-		cout << "Elementos de stack (en orden de primero a ultimo ingresado):\n";
-		for (int i = 0; i < size; i++)
+		cout << "Elementos de stack (en orden del que deberian salir):\n";
+		for (int i = size-1; i >= 0; i--)
 		{
 			cout << array[i]->toString() << endl;
 		}
