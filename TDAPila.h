@@ -4,10 +4,11 @@
 #include "NodoAlumno.h"
 class TDAPila
 {
-public:
-	int size = 0;
+protected:
 	NodoAlumno* inicio;
 	NodoAlumno* final;
+public:
+	int size = 0;
 	//Metodo push (inserta un elemento dentro del stack)
 	virtual void push(Object*) = 0;
 	//Metodo pop (Quita el elemento mas proximo a salir del stack)
@@ -20,6 +21,7 @@ public:
 	virtual void clear() = 0;
 	//Imprime todos los elementos
 	virtual void print() = 0;
+
 };
 
 

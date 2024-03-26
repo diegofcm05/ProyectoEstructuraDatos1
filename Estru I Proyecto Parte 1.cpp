@@ -24,6 +24,9 @@ Object* topeActS;   //Guarda el tope actual de la pila de Simbolos
 
 //Metodo que valida las entradas de opciones, verifica que lo que ingresa el usuario son digitos.
 bool isDigit(string aValidar) {
+    if (aValidar == "") {
+        return false;
+    }
     for (int i = 0; i < aValidar.size(); i++)
     {
         if (aValidar[i] < 48 || aValidar[i] > 57) {
@@ -235,10 +238,11 @@ void menuInternoAL() {
                 else {
                     cout << alumno->toString() << endl;
                 }
-
+                cin.ignore();
             }
-            cin.ignore();
-
+            else {
+                cout << "La lista esta vacia!!\n";
+            }
             break;
         case 7://Retorna el elemento siguiente a la posicion establecida por el usuario.
             cout << "Opcion 7 - Recuperar Siguiente" << endl;
@@ -599,7 +603,7 @@ void menuInternoAP() {
         case 6://Se limpia el stack, se borran los elementos y se libera memoria internamente.
             cout << "Opcion 6 - Borrar elementos de pila" << endl;
             Pila->clear();
-            cout << "Se han borrado todos los elementos actuales de la lista.\nSu size ahora es " << Pila->size << endl;
+            cout << "Se han borrado todos los elementos actuales de la lista.\nSu size ahora es 0. " << endl;
             break;
 
         case 7://Opcion para salir a un menu exterior.
