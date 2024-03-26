@@ -5,7 +5,7 @@ Nodo::Nodo()
 {
 	siguiente = nullptr;
 	anterior = nullptr;
-	dato = NULL;
+	dato = nullptr;
 }
 
 //Constructor que recibe un objeto
@@ -19,7 +19,7 @@ Nodo::Nodo(Object* Dato)
 //Destructor
 Nodo::~Nodo()
 {
-	if (dato != nullptr) {
+	if (dato) {
 		delete dato;
 	}
 	if (siguiente)

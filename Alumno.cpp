@@ -34,7 +34,7 @@ bool Alumno::equals(Object* otroObj)
 	if (dynamic_cast<Alumno*>(otroObj)) {
 		Alumno* OtroAlumno = dynamic_cast<Alumno*>(otroObj);
 		if (OtroAlumno != nullptr) {	
-			if (OtroAlumno->numCuenta == this->numCuenta) {
+			if (OtroAlumno->getCuenta() == this->getCuenta()) {
 				return true;
 			}
 		}

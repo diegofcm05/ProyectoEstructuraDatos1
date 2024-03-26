@@ -177,7 +177,7 @@ void menuInternoAL() {
             }
             else {
                 cout << "Alumno encontrado: " << endl;
-                cout << alumno->toString() << endl;
+                cout << alumno->toString() << "\nSe encontro en la posicion " << pos << endl;
             }
            
             break;
@@ -284,6 +284,7 @@ void menuInternoAL() {
 
 //Menu interno de LinkedList
 void menuInternoLL() {
+    //Inicialización de variables
     LinkedList* lista = new LinkedList();
     Alumno* alumno;
     int opc = 1;
@@ -292,6 +293,7 @@ void menuInternoLL() {
     string valid = "";
     bool seguir = true;
     int pos;
+    //Menu que se repetirá hasta ingresar la opcion 10 o regresar al menu anterior
     while (opc != 10) {
         seguir = true;
         cout << "----- Operaciones de Listas -----" << endl;
@@ -329,12 +331,10 @@ void menuInternoLL() {
         }
 
         switch (opc) {
-        case 1:
-
-
+        case 1://En esta opcion se hace el agregado de un alumno
+            cout << "Opcion 1 - Insertar" << endl;
             while (seguir) {
                 cout << "Ingrese el nombre del alumno: ";
-                cin.ignore();
                 getline(cin, nombre);
                 cout << "Ingrese el número de cuenta del alumno: ";
                 getline(cin, nCuenta);
@@ -380,7 +380,8 @@ void menuInternoLL() {
 
             break;
 
-        case 2:
+        case 2://En el caso 2, se imprime la lista completa
+            cout << "Opcion 2 - Imprimir Elementos" << endl;
             if (lista->vacia())
             {
                 cout << "LISTA VACIA" << endl;
@@ -395,22 +396,23 @@ void menuInternoLL() {
 
             break;
 
-        case 3:
+        case 3://En el caso 3, se trata de buscar un alumno mediante su numero de cuenta.
+            cout << "Opcion 3 - Buscar" << endl;
             cout << "Ingrese el número de cuenta del alumno a buscar: ";
-            cin.ignore();
             getline(cin, nCuenta);
             alumno = new Alumno("", nCuenta);
 
             posicion = lista->busca(alumno);
             if (posicion != -1) {
-                cout << "El alumno se encuentra en la posición " << posicion << endl;
+                cout << "El alumno es " << lista->recupera(posicion - 1)->toString() << " y se encuentra en la posición " << posicion << endl;
             }
             else {
                 cout << "El alumno no se encuentra en la lista." << endl;
             }
             break;
 
-        case 4:
+        case 4://En esta opcion, se borra un elemento que el usuario desee hacer eso con.
+            cout << "Opcion 4 - Eliminar elemento" << endl;
             int posicion;
             int index;
             lista->imprime_lista();
@@ -422,66 +424,71 @@ void menuInternoLL() {
             else {
                 cout << "No se pudo borrar el elemento. Verifique la posición." << endl;
             }
-
+            cin.ignore();
 
             break;
 
-        case 5:
+        case 5://En el caso 5, se verifica si la lista esta vacia o no.
+            cout << "Opcion 5 - Verificar si esta vacia" << endl;
             cout << (lista->vacia() ? "Está vacia" : "No está vacia") << endl;
             cout << endl;
             break;
 
-        case 6:
+        case 6://En el caso 6, se busca un elemento.
+            cout << "Opcion 6 - Obtener elemento por posicion" << endl;
             lista->imprime_lista();
             cout << "Ingrese la posición del elemento a obtener: ";
             cin >> posicion;
-            alumno = dynamic_cast<Alumno*>(lista->recupera(posicion));
+            alumno = dynamic_cast<Alumno*>(lista->recupera(posicion - 1));
             if (alumno != nullptr) {
                 cout << "El elemento en la posición " << posicion << " es: " << alumno->toString() << endl;
             }
             else {
                 cout << "No se pudo obtener el elemento. Verifique la posición." << endl;
             }
-
+            cin.ignore();
 
             break;
 
-        case 7:
+        case 7://Retorna el elemento siguiente a la posicion establecida por el usuario.
+            cout << "Opcion 7 - Recuperar Siguiente" << endl;
             lista->imprime_lista();
             cout << "Ingrese la posición del elemento del cual desea obtener el siguiente: ";
             cin >> posicion;
-            alumno = dynamic_cast<Alumno*>(lista->siguiente(posicion));
+            alumno = dynamic_cast<Alumno*>(lista->siguiente(posicion - 1));
             if (alumno != nullptr) {
                 cout << "El siguiente elemento después de la posición " << posicion << " es: " << alumno->toString() << endl;
             }
             else {
                 cout << "No hay siguiente elemento o la posición es inválida." << endl;
             }
-
+            cin.ignore();
 
             break;
 
-        case 8:
+        case 8://Retorna el elemento anterior a la posicion establecida por el usuario.
+            cout << "Opcion 8 - Recuperar Anterior" << endl;
             lista->imprime_lista();
             cout << "Ingrese la posición del elemento del cual desea obtener el anterior: ";
             cin >> posicion;
-            alumno = dynamic_cast<Alumno*>(lista->anterior(posicion));
+            alumno = dynamic_cast<Alumno*>(lista->anterior(posicion - 1));
             if (alumno != nullptr) {
                 cout << "El elemento anterior a la posición " << posicion << " es: " << alumno->toString() << endl;
             }
             else {
                 cout << "No hay elemento anterior o la posición es inválida." << endl;
             }
-
+            cin.ignore();
 
             break;
 
-        case 9:
+        case 9://En el caso 9, la lista se vacia completamente.
+            cout << "Opcion 9 - Borrar todos los elementos" << endl;
             lista->anula();
             cout << "Se han borrado todos los elementos de la lista." << endl;
             break;
 
-        case 10:
+        case 10://Se sale al menu exterior a este.
             cout << "Regresando al menú anterior..." << endl;
             break;
 
@@ -771,7 +778,7 @@ void menuInternoAC() {
         case 6: {//Vacia la cola.
             cout << "Opcion 6 - Borrar elementos de cola" << endl;
             aq->anula();
-            cout << "La lista se vacio con exito" << endl;
+            cout << "La cola se vacio con exito" << endl;
             break;
         }
         case 7: {//Sale al menu exterior de tipos de colas

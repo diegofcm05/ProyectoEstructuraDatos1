@@ -1,118 +1,175 @@
 #include "LinkedList.h"
 
+//constructor que inicializa los nodos que se van a utilizar en todo el programa
 LinkedList::LinkedList() {
-    nodo = nullptr;
+    inicio = nullptr;
+    ultimo = nullptr;
     size = 0;
 }
-
+// Manda a llamar el metodo anula que se encarga de borrar todos los nodos en cascada y se encarga de borrar memoria
 LinkedList::~LinkedList() {
+    anula();
 }
 
+//inserta el alumno en la posicion que el usuario escoja, en caso de ponerlo en una posicion que ya exista, corre todos
+//los elementos a la derecha
 bool LinkedList::inserta(Object* dato, int position) {
-    if (position < 1 || position > size+1) {
+    if (position < 1 || position > size + 1) {
+        // Verificar si la posición es válida
         return false;
     }
 
-    Nodo* nuevoNodo = new Nodo(dynamic_cast<Alumno*>(dato));
-    if (!nuevoNodo) {
-        return false;
-    }
-
+    Nodo* nuevoNodo = new Nodo(dato); // Crear un nuevo nodo con el dato proporcionado
+    Nodo* temp = nullptr;
     if (position == 1) {
-        nuevoNodo->setSiguiente(nodo);
-        if (nodo)
-            nodo->setAnterior(nuevoNodo);
-        nodo = nuevoNodo;
+        // Insertar al principio de la lista
+
+        if (inicio != nullptr) {
+            temp = inicio;
+            inicio = nuevoNodo;
+            inicio->setSiguiente(temp);
+            temp->setAnterior(inicio);
+        }
+        else {
+            inicio = nuevoNodo;
+            ultimo = nuevoNodo;
+        }
+    }//Inserta al final de la lista
+    else if (position >= size) {
+        if (position == size + 1) {
+            ultimo->setSiguiente(nuevoNodo);
+            temp = ultimo;
+            ultimo = nuevoNodo;
+            nuevoNodo->setAnterior(temp);
+        }
+        else {
+            temp = ultimo;
+            ultimo->getAnterior()->setSiguiente(nuevoNodo);
+            nuevoNodo->setAnterior(ultimo->getAnterior());
+            ultimo->setAnterior(nuevoNodo);
+            nuevoNodo->setSiguiente(temp);
+        }
     }
     else {
-        Nodo* temp = nodo;
-        for (int i = 1; i < position - 1; ++i) {
+        // Insertar en una posición diferente del inicio de la lista
+        temp = inicio;
+        for (int i = 0; i <= position - 1; i++) {
             temp = temp->getSiguiente();
         }
-        nuevoNodo->setSiguiente(temp->getSiguiente());
-        nuevoNodo->setAnterior(temp);
-        if (temp->getSiguiente())
-            temp->getSiguiente()->setAnterior(nuevoNodo);
-        temp->setSiguiente(nuevoNodo);
+        temp->getAnterior()->setSiguiente(nuevoNodo);
+        temp->setAnterior(nuevoNodo);
+        nuevoNodo->setSiguiente(temp);
     }
-    ++size;
+    ++size; // Incrementar el tamaño de la lista
     return true;
 }
-
+//borra un elemento en la posicion que se encuentra en la lista, encargandose de borrar memoria de ese elemento y dejando intactos 
+//sus siguientes y anteriores
 bool LinkedList::suprime(int position) {
-    if (position < 1 || position > size || size == 0) {
-        return false;
+    if (position < 1 || position > size) {
+        return false; // Si la posición es inválida, retorna falso
     }
 
-    Nodo* temp = nodo;
+    Nodo* temp = nullptr;
 
-    if (position == 1) {
-        nodo = nodo->getSiguiente();
-        if (nodo) {
-            nodo->setAnterior(nullptr);
-        }
+    if (position == 1) { // Eliminar el primer elemento                        
+        temp = inicio;
+        inicio = inicio->getSiguiente();
+        inicio->setAnterior(nullptr);
+        temp->setSiguiente(nullptr);
+        delete temp; // Liberar memoria del nodo eliminado
+        temp = nullptr;
+    }
+    else if (position == size) {
+        temp = ultimo;
+        ultimo = ultimo->getAnterior();
+        temp->setAnterior(nullptr);
+        ultimo->setSiguiente(nullptr);
+        delete temp; // Liberar memoria del nodo eliminado
+        temp = nullptr;
     }
     else {
-        for (int i = 1; i < position; ++i) {
-            temp = temp->getSiguiente();
+        Nodo* current = inicio;
+        for (int i = 1; i < position; i++) {
+            current = current->getSiguiente();
         }
-        temp->getAnterior()->setSiguiente(temp->getSiguiente());
-        if (temp->getSiguiente()) {
-            temp->getSiguiente()->setAnterior(temp->getAnterior());
-        }
+        temp = current;
+        current = current->getAnterior();
+        current->setSiguiente(temp->getSiguiente());
+        temp->getSiguiente()->setAnterior(current);
+        temp->setSiguiente(nullptr);
+        temp->setAnterior(nullptr);
+        delete temp; // Liberar memoria del nodo eliminado
+        temp = nullptr;
     }
 
-    delete temp;
-    --size;
+
+    --size; // Disminuir el tamaño de la lista
     return true;
 }
 
+//Se encarga de devolver el elemento siguiente a la posicion que ingresó el usuario
 Object* LinkedList::siguiente(int position) {
-    if (position < 1 || position >= size) {
-        return nullptr;
+    if (position < 0 || position >= size - 1) {
+        return nullptr; // Posición inválida
     }
 
-    Nodo* temp = nodo;
-    for (int i = 1; i <= position; ++i) {
+    Nodo* temp = inicio;
+    //Recorre toda la lista para encontrar el siguiente de la posicion ingresada
+    for (int i = 0; i < position; i++) {
         temp = temp->getSiguiente();
+    }
+    //Si no encuentra nada entonces no hay un siguiente elemento
+    if (temp->getSiguiente() == nullptr) {
+        return nullptr; // No hay siguiente elemento
     }
 
     return temp->getSiguiente()->getDato();
 }
-
+//Se encarga de devolver el elemento anterior a la posicion que ingresó el usuario
 Object* LinkedList::anterior(int position) {
-    if (position <= 1 || position > size) {
-        return nullptr;
+    if (position < 0 || position > size) {
+        return nullptr; // Posición inválida
     }
 
-    Nodo* temp = nodo;
-    for (int i = 1; i < position; ++i) {
+    Nodo* temp = inicio;
+    //Recorre toda la lista para encontrar el anterior de la posicion ingresada
+    for (int i = 0; i < position; i++) {
         temp = temp->getSiguiente();
+    }
+    //Si no encuentra nada entonces no hay un anterior elemento
+    if (temp->getAnterior() == nullptr) {
+        return nullptr; // No hay elemento anterior
     }
 
     return temp->getAnterior()->getDato();
 }
-
+//Se encarga de vaciar la lista en su totalidad y reiniciando los punteros para volver a usar la lista con normalidad
 void LinkedList::anula() {
-    while (nodo) {
-        Nodo* temp = nodo;
-        nodo = nodo->getSiguiente();
-        delete temp;
-    }
+    delete inicio;
+    inicio = nullptr;
+    ultimo = nullptr;
     size = 0;
 }
 
+
+
+//Por medio del numero de cuenta busca un alumno con numero de cuenta igual en la lista
 int LinkedList::busca(Object* obj) {
-    Nodo* temp = nodo;
+    Nodo* temp = inicio;
+    //Retorna la primera posicion por si estaba en la primera posicion
     if (temp->getDato()->equals(obj)) {
         return 1;
     }
     else {
-        for (int i = 1; i <= size; i++) {
+        //Si no estaba en la primera posicion recorre toda la lista hasta encontrar un objeto igual y retorna su posicion
+        //en la lista
+        for (size_t i = 1; i <= size; i++) {
             if (temp->getDato()->equals(obj)) {
                 return i;
             }
             else {
+                //Si no lo encuentra solo devuelve el siguiente
                 if (temp->getSiguiente() != nullptr) {
                     temp = temp->getSiguiente();
                 }
@@ -121,23 +178,24 @@ int LinkedList::busca(Object* obj) {
     }
     return -1;
 }
-
+//El metodo se encarga de buscar un objeto en la LinkedList por medio de su posicion y retornar ese objeto
 Object* LinkedList::recupera(int position) {
     if (position < 0 || position >= size) {
-        return nullptr;
+        return nullptr; //validacion de que si la posicion existe
     }
 
-    Nodo* temp = nodo;
-    for (int i = 1; i < position; ++i) {
+    Nodo* temp = inicio;
+    //for que recorre la lista y encuentra el objeto buscando desde el inicio de la lista hasta la posicion
+    for (int i = 0; i < position; ++i) {
         temp = temp->getSiguiente();
     }
 
     return temp->getDato();
 }
 
-
+//metodo que se encarga de imprimir los elementos de la lista por medio del toString de la clase Alumno
 void LinkedList::imprime_lista() {
-    Nodo* temp = nodo;
+    Nodo* temp = inicio;
     int index = 1;
     while (temp) {
         cout << index << "- " << temp->getDato()->toString() << endl;
@@ -146,6 +204,7 @@ void LinkedList::imprime_lista() {
     }
 }
 
+//Metodo que se encarga de revisar si la lista está vacia viendo si el size de la lista es igual a 0
 bool LinkedList::vacia()
 {
     if (size == 0) {
@@ -156,6 +215,7 @@ bool LinkedList::vacia()
     }
 }
 
+//metodo que retorna el size actual de la lista (se usó más para probar metodos)
 int LinkedList::getSize()
 {
     return size;
