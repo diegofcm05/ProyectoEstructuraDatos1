@@ -146,10 +146,17 @@ Object* LinkedList::anterior(int position) {
 }
 //Se encarga de vaciar la lista en su totalidad y reiniciando los punteros para volver a usar la lista con normalidad
 void LinkedList::anula() {
-    delete inicio;
-    inicio = nullptr;
-    ultimo = nullptr;
-    size = 0;
+    if (size == 0) {
+        cout << "La lista ya esta vacia." << endl;
+    }
+    else {
+        delete inicio;
+        inicio = nullptr;
+        ultimo = nullptr;
+        size = 0;
+        cout << "Se han borrado todos los elementos de la lista." << endl;
+    }
+    
 }
 
 

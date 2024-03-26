@@ -48,6 +48,7 @@ Alumno* crearAlumno() {
 //Menu interno de ArrayList
 void menuInternoAL() {
     //variables de inicializacion
+    string checkPos = "";
     string valid = "";
     int opc = 1;
     string nombre = "";
@@ -114,13 +115,27 @@ void menuInternoAL() {
                 alumno = new Alumno(nombre, nCuenta);
 
                 //pide la posicion donde se desea ingresar el alumno
-                cout << "Ingrese la posicion en donde desea agregar el alumno: ";
-                cin >> pos;
+                cout << "Ingrese la posicion en donde desea agregar el alumno (Ingrese solo numeros!): ";
+                getline(cin, checkPos);
+
+                while (!isDigit(checkPos)) {
+                    cout << "Ingrese solo numeros!!" << endl;
+                    getline(cin, checkPos);
+                }
+
+                pos = stoi(checkPos);
 
                 while (pos < 1 || pos > lista->getSize() + 1) {
                     cout << "Posición inválida" << endl;
                     cout << "Ingrese la posicion en donde desea agregar el alumno: ";
-                    cin >> pos;
+                    getline(cin, checkPos);
+
+                    while (!isDigit(checkPos)) {
+                        cout << "Ingrese solo numeros!!" << endl;
+                        getline(cin, checkPos);
+                    }
+
+                    pos = stoi(checkPos);
                 }
                 if (lista->inserta(alumno, pos)) {
                     cout << "Se ha agregado el elemento exitosamente!" << endl;
@@ -128,7 +143,6 @@ void menuInternoAL() {
                 else {
                     cout << "Error al agregar el elemento." << endl;
                 }
-                cin.ignore();
                 do {
                     cout << "Desea continuar (Ingrese Si/No): ";
                     getline(cin, respuesta);
@@ -485,7 +499,6 @@ void menuInternoLL() {
         case 9://En el caso 9, la lista se vacia completamente.
             cout << "Opcion 9 - Borrar todos los elementos" << endl;
             lista->anula();
-            cout << "Se han borrado todos los elementos de la lista." << endl;
             break;
 
         case 10://Se sale al menu exterior a este.
