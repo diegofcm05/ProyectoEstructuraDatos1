@@ -253,7 +253,7 @@ void menuInternoAL() {
                 alumno = dynamic_cast<Alumno*>(lista->siguiente(pos));
 
                 if (!alumno) {
-                    cout << "El elemento siguiente esta vacio" << endl;
+                    cout << "El elemento siguiente esta vacio o no existe el elemento base." << endl;
                 }
                 else {
                     cout << alumno->toString() << endl;
@@ -274,7 +274,7 @@ void menuInternoAL() {
                 alumno = dynamic_cast<Alumno*>(lista->anterior(pos));
 
                 if (!alumno) {
-                    cout << "El elemento anterior esta vacio" << endl;
+                    cout << "El elemento anterior esta vacio o no existe el elemento base." << endl;
                 }
                 else {
                     cout << alumno->toString() << endl;
@@ -1088,6 +1088,12 @@ void menuPrincipal() {
             break;
         case 4:
             cout << "Ha salido del programa" << endl;
+            delete Pila;
+            delete aq;
+            delete lq;
+            delete temporalsym;
+            delete symsacado;
+            delete topeActS;
             break;
 
         default:

@@ -4,12 +4,10 @@
 #include "Alumno.h"
 
 class LinkedList : public TDALista {
-
+public:
     //Nodos de inicio y final que se encargan de poner en orden los elementos de la lista
     Nodo* inicio;
     Nodo* ultimo;
-
-public:
     //constructor que inicializa los nodos
     LinkedList();
     //destructor que libera memoria de los nodos

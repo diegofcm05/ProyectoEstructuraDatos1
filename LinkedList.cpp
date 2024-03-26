@@ -72,6 +72,13 @@ bool LinkedList::suprime(int position) {
 
     Nodo* temp = nullptr;
 
+    if (position == 1 && size == 1) {//Si la posicion es la primera y solo existe ese elemento
+        delete inicio;
+        inicio = nullptr;
+        ultimo = nullptr;
+        size = 0;
+        return true;
+    }
     if (position == 1) { // Eliminar el primer elemento                        
         temp = inicio;
         inicio = inicio->getSiguiente();
@@ -163,6 +170,11 @@ void LinkedList::anula() {
 
 //Por medio del numero de cuenta busca un alumno con numero de cuenta igual en la lista
 int LinkedList::busca(Object* obj) {
+    if (size == 0) {
+        cout << "La lista esta vacia" << endl;
+        return -1;
+    }
+
     Nodo* temp = inicio;
     //Retorna la primera posicion por si estaba en la primera posicion
     if (temp->getDato()->equals(obj)) {
